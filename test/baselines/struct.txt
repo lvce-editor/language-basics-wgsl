@@ -1,6 +1,6 @@
 Keyword
 Whitespace
-VariableName
+Type
 Whitespace
 Punctuation
 NewLine
