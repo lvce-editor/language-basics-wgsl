@@ -81,6 +81,7 @@ const RE_SINGLE_QUOTE = /^'/
 const RE_ANYTHING_BUT_CURLY = /^[^\{\}]+/s
 const RE_LINE_COMMENT = /^\/\/.*/s
 const RE_KEYWORD = /^(?:var|let|fn|for|struct)\b/
+const RE_PUNCTUATION = /^[\{\}\[\]\(\)\.\;\<\>\=\+\-\:\*\/\&>\?\@\<\>\,]/
 
 export const initialLineState = {
   state: State.TopLevelContent,
@@ -130,6 +131,12 @@ export const tokenizeLine = (line, lineState) => {
               break
           }
           token = TokenType.Keyword
+        } else if ((next = part.match(RE_PUNCTUATION))) {
+          token = TokenType.Punctuation
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_VARIABLE_NAME))) {
+          token = TokenType.Variable
+          state = State.TopLevelContent
         } else if ((next = part.match(RE_ANYTHING))) {
           token = TokenType.Unknown
           state = State.TopLevelContent
@@ -141,6 +148,9 @@ export const tokenizeLine = (line, lineState) => {
       case State.AfterKeywordDeclaration:
         if ((next = part.match(RE_WHITESPACE))) {
           token = TokenType.Whitespace
+          state = State.AfterKeywordDeclaration
+        } else if ((next = part.match(RE_PUNCTUATION))) {
+          token = TokenType.Punctuation
           state = State.AfterKeywordDeclaration
         } else if ((next = part.match(RE_VARIABLE_NAME))) {
           token = TokenType.Variable
