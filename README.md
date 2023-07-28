@@ -1,16 +1,16 @@
-# Language Basics Css
+# Language Basics Wgsl
 
-Css syntax highlighting for Lvce Editor.
+Wgsl syntax highlighting for Lvce Editor.
 
 ## Contributing
 
 ```sh
-git clone git@github.com:lvce-editor/language-basics-css.git &&
-cd language-basics-css &&
+git clone git@github.com:lvce-editor/language-basics-wgsl.git &&
+cd language-basics-wgsl &&
 npm ci &&
 npm test
 ```
 
 ## Gitpod
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/lvce-editor/language-basics-css)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/lvce-editor/language-basics-wgsl)
