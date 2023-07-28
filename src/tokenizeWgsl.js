@@ -26,6 +26,9 @@ export const TokenType = {
   String: 891,
   KeywordImport: 892,
   Keyword: 123,
+  KeywordControl: 124,
+  KeywordReturn: 125,
+  Type: 126,
 }
 
 export const TokenMap = {
@@ -45,6 +48,9 @@ export const TokenMap = {
   [TokenType.String]: 'String',
   [TokenType.KeywordImport]: 'KeywordImport',
   [TokenType.Keyword]: 'Keyword',
+  [TokenType.KeywordControl]: 'KeywordControl',
+  [TokenType.KeywordReturn]: 'KeywordReturn',
+  [TokenType.Type]: 'Type',
 }
 
 const RE_WHITESPACE = /^\s+/
@@ -82,6 +88,7 @@ const RE_ANYTHING_BUT_CURLY = /^[^\{\}]+/s
 const RE_LINE_COMMENT = /^\/\/.*/s
 const RE_KEYWORD =
   /^(?:var|let|fn|for|struct|vec2|f32|if|elseif|else|mat4x4|vec4|return)\b/
+
 const RE_PUNCTUATION = /^[\{\}\[\]\(\)\.\;\<\>\=\+\-\:\*\/\&>\?\@\<\>\,]/
 
 export const initialLineState = {
@@ -125,13 +132,32 @@ export const tokenizeLine = (line, lineState) => {
           switch (next[0]) {
             case 'let':
             case 'var':
+              token = TokenType.Keyword
               state = State.AfterKeywordDeclaration
               break
+            case 'if':
+            case 'elseif':
+            case 'else':
+              token = TokenType.KeywordControl
+              state = State.TopLevelContent
+              break
+            case 'return':
+              token = TokenType.KeywordReturn
+              state = State.TopLevelContent
+              break
+            case 'vec4':
+            case 'vec2':
+            case 'f32':
+            case 'i32':
+            case 'mat4x4':
+              token = TokenType.Type
+              state = State.TopLevelContent
+              break
             default:
+              token = TokenType.Keyword
               state = State.TopLevelContent
               break
           }
-          token = TokenType.Keyword
         } else if ((next = part.match(RE_PUNCTUATION))) {
           token = TokenType.Punctuation
           state = State.TopLevelContent
