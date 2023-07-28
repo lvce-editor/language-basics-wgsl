@@ -3,6 +3,7 @@
  */
 export const State = {
   TopLevelContent: 1,
+  AfterKeywordDeclaration: 2,
 }
 
 /**
@@ -70,7 +71,7 @@ const RE_QUERY_NAME = /^[a-zA-Z\w\-\d\_]+/
 const RE_QUERY_CONTENT = /^[^\)]+/
 const RE_COMBINATOR = /^[\+\>\~]/
 const RE_FUNCTION = /^[a-zA-Z][a-zA-Z\-]+(?=\()/
-const RE_VARIABLE_NAME = /^\-\-[a-zA-Z\w\-\_]+/
+const RE_VARIABLE_NAME = /^[a-zA-Z\w\-\_\d]+/
 const RE_PERCENT = /^\%/
 const RE_OPERATOR = /^[\-\/\*\+]/
 const RE_DOUBLE_QUOTE = /^"/
@@ -79,7 +80,7 @@ const RE_STRING_SINGLE_QUOTE_CONTENT = /^[^']+/
 const RE_SINGLE_QUOTE = /^'/
 const RE_ANYTHING_BUT_CURLY = /^[^\{\}]+/s
 const RE_LINE_COMMENT = /^\/\/.*/s
-const RE_KEYWORD = /^(?:var|let|fn|for)\b/
+const RE_KEYWORD = /^(?:var|let|fn|for|struct)\b/
 
 export const initialLineState = {
   state: State.TopLevelContent,
@@ -119,13 +120,35 @@ export const tokenizeLine = (line, lineState) => {
           token = TokenType.Comment
           state = State.TopLevelContent
         } else if ((next = part.match(RE_KEYWORD))) {
+          switch (next[0]) {
+            case 'let':
+            case 'var':
+              state = State.AfterKeywordDeclaration
+              break
+            default:
+              state = State.TopLevelContent
+              break
+          }
           token = TokenType.Keyword
-          state = State.TopLevelContent
         } else if ((next = part.match(RE_ANYTHING))) {
           token = TokenType.Unknown
           state = State.TopLevelContent
         } else {
           part //?
+          throw new Error('no')
+        }
+        break
+      case State.AfterKeywordDeclaration:
+        if ((next = part.match(RE_WHITESPACE))) {
+          token = TokenType.Whitespace
+          state = State.AfterKeywordDeclaration
+        } else if ((next = part.match(RE_VARIABLE_NAME))) {
+          token = TokenType.Variable
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_ANYTHING))) {
+          token = TokenType.Unknown
+          state = State.TopLevelContent
+        } else {
           throw new Error('no')
         }
         break

@@ -5,10 +5,13 @@ NewLine
 Whitespace
 Keyword
 Whitespace
+VariableName
 Unknown
 NewLine
 Whitespace
 Keyword
+Whitespace
+VariableName
 Whitespace
 Unknown
 NewLine
