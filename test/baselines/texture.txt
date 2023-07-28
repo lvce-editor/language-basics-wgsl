@@ -2,4 +2,16 @@ Keyword
 Whitespace
 VariableName
 Whitespace
-Unknown
+Punctuation
+Whitespace
+VariableName
+Punctuation
+VariableName
+Punctuation
+Whitespace
+VariableName
+Punctuation
+Whitespace
+VariableName
+Punctuation
+Punctuation
