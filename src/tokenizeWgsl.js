@@ -4,6 +4,7 @@
 export const State = {
   TopLevelContent: 1,
   AfterKeywordDeclaration: 2,
+  AfterKeywordStruct: 3,
 }
 
 /**
@@ -153,6 +154,10 @@ export const tokenizeLine = (line, lineState) => {
               token = TokenType.Type
               state = State.TopLevelContent
               break
+            case 'struct':
+              token = TokenType.Keyword
+              state = State.AfterKeywordStruct
+              break
             default:
               token = TokenType.Keyword
               state = State.TopLevelContent
@@ -181,6 +186,23 @@ export const tokenizeLine = (line, lineState) => {
           state = State.AfterKeywordDeclaration
         } else if ((next = part.match(RE_VARIABLE_NAME))) {
           token = TokenType.Variable
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_ANYTHING))) {
+          token = TokenType.Unknown
+          state = State.TopLevelContent
+        } else {
+          throw new Error('no')
+        }
+        break
+      case State.AfterKeywordStruct:
+        if ((next = part.match(RE_WHITESPACE))) {
+          token = TokenType.Whitespace
+          state = State.AfterKeywordStruct
+        } else if ((next = part.match(RE_PUNCTUATION))) {
+          token = TokenType.Punctuation
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_VARIABLE_NAME))) {
+          token = TokenType.Type
           state = State.TopLevelContent
         } else if ((next = part.match(RE_ANYTHING))) {
           token = TokenType.Unknown
