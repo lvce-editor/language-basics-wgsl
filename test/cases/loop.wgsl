@@ -1,0 +1,1 @@
+for (var i = 0u; i < lights.pointCount; i++) {}
