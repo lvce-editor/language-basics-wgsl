@@ -1,8 +1,14 @@
-Unknown
-NewLine
+Keyword
 Whitespace
 Unknown
 NewLine
+Whitespace
+Keyword
+Whitespace
+Unknown
+NewLine
+Whitespace
+Keyword
 Whitespace
 Unknown
 NewLine

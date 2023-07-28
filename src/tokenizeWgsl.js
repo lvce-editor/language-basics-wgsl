@@ -24,6 +24,7 @@ export const TokenType = {
   FuntionName: 890,
   String: 891,
   KeywordImport: 892,
+  Keyword: 123,
 }
 
 export const TokenMap = {
@@ -42,6 +43,7 @@ export const TokenMap = {
   [TokenType.FuntionName]: 'Function',
   [TokenType.String]: 'String',
   [TokenType.KeywordImport]: 'KeywordImport',
+  [TokenType.Keyword]: 'Keyword',
 }
 
 const RE_WHITESPACE = /^\s+/
@@ -77,6 +79,7 @@ const RE_STRING_SINGLE_QUOTE_CONTENT = /^[^']+/
 const RE_SINGLE_QUOTE = /^'/
 const RE_ANYTHING_BUT_CURLY = /^[^\{\}]+/s
 const RE_LINE_COMMENT = /^\/\/.*/s
+const RE_KEYWORD = /^(?:var|let|fn|for)\b/
 
 export const initialLineState = {
   state: State.TopLevelContent,
@@ -114,6 +117,9 @@ export const tokenizeLine = (line, lineState) => {
           state = State.TopLevelContent
         } else if ((next = part.match(RE_LINE_COMMENT))) {
           token = TokenType.Comment
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_KEYWORD))) {
+          token = TokenType.Keyword
           state = State.TopLevelContent
         } else if ((next = part.match(RE_ANYTHING))) {
           token = TokenType.Unknown
