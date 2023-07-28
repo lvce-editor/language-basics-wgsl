@@ -80,7 +80,8 @@ const RE_STRING_SINGLE_QUOTE_CONTENT = /^[^']+/
 const RE_SINGLE_QUOTE = /^'/
 const RE_ANYTHING_BUT_CURLY = /^[^\{\}]+/s
 const RE_LINE_COMMENT = /^\/\/.*/s
-const RE_KEYWORD = /^(?:var|let|fn|for|struct)\b/
+const RE_KEYWORD =
+  /^(?:var|let|fn|for|struct|vec2|f32|if|elseif|else|mat4x4|vec4|return)\b/
 const RE_PUNCTUATION = /^[\{\}\[\]\(\)\.\;\<\>\=\+\-\:\*\/\&>\?\@\<\>\,]/
 
 export const initialLineState = {
