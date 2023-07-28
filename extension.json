@@ -1,0 +1,13 @@
+{
+  "id": "builtin.language-basics-wgsl",
+  "name": "Language Basics WGSL",
+  "description": "Provides syntax highlighting and bracket matching in WebGPU Shader Language files.",
+  "languages": [
+    {
+      "id": "wgsl",
+      "extensions": [".wgsl"],
+      "tokenize": "src/tokenizeWgsl.js",
+      "configuration": "languageConfiguration.json"
+    }
+  ]
+}
