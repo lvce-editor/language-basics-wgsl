@@ -1,5 +1,5 @@
 {
-  "name": "builtin.language-basics-css",
+  "name": "builtin.language-basics-wgsl",
   "version": "0.0.0-dev",
   "description": "",
   "main": "index.js",
