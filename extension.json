@@ -5,9 +5,12 @@
   "languages": [
     {
       "id": "wgsl",
-      "extensions": [".wgsl"],
+      "extensions": [
+        ".wgsl"
+      ],
       "tokenize": "src/tokenizeWgsl.js",
       "configuration": "languageConfiguration.json"
     }
-  ]
+  ],
+  "repository": "https://github.com/lvce-editor/language-basics-wgsl"
 }
